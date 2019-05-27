@@ -1,0 +1,85 @@
+<div ng-show="fetching">
+    <div class="wrapper-md ng-scope">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fetching...
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="fetching">
+    <div class="bg-light lter b-b wrapper-md">
+        <div class="row">
+            <div class="col-sm-6 col-xs-12">
+                <h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+                <div ng-show="currentState===pageStates.EDITING" class="m-b-sm">
+                    <span ng-show="!editTitle" ng-dblclick="editTitle=!editTitle">{{temporaryDashboard.title}}</span>
+                    <input ng-show="editTitle" ng-model="temporaryDashboard.title" autofocus/>
+                    <button class="btn btn-xs btn-default" ng-show="!editTitle" ng-click="editTitle=!editTitle">
+                        Edit name
+                    </button>
+                    <button class="btn btn-xs btn-default" ng-show="editTitle" ng-click="editTitle=!editTitle" ng-disabled="!temporaryDashboard.title">Done
+                    </button>
+                    <button class="btn btn-xs btn-default" ng-show="editTitle" ng-click="cancelEditingTitle()">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <small ng-show="currentState===pageStates.PREVIEW" class="text-muted">
+                    {{userDashboard.title}}
+                </small>
+            </div>
+            <div ng-repeat="miniWidget in userDashboard.miniWidgets">
+                <div ng-switch="miniWidget.name">
+                    <div ng-switch-when="cpu" mini-widget-directive model="miniWidget"></div>
+                    <div ng-switch-when="memory" mini-widget-directive model="miniWidget"></div>
+                </div>
+            </div>
+
+            <div class="m-b-sm m-r-sm m-t-sm">
+                <button type="button" ng-show="currentState===pageStates.EDITING" class="btn btn-info pull-right m-l-md m-b-xs" ng-disabled="modifyingTemplate || editTitle"
+                    ng-click="restoreDefault()">Restore Default
+                </button>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default" ng-click="changeStates()" ng-disabled="modifyingTemplate || editTitle">
+                        {{currentState===pageStates.PREVIEW ?'Edit':'Save'}}
+                    </button>
+                    <button type="button" ng-show="currentState===pageStates.EDITING" class="btn btn-default" ng-disabled="modifyingTemplate"
+                        ng-click="revertChanges()">Cancel
+                    </button>
+                </div>
+
+                <span ng-if="modifyingTemplate" class="pull-right m-t-sm">Saving changes...</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-body b-b b-light">
+        <div>
+            <div id="preview" ng-if="currentState===pageStates.PREVIEW">
+                <div class="grid row" id="preview-grid">
+                    <div ng-repeat="widget in userDashboard.widgets" ng-class="widgetSize[widget.size]" class="col-xs-12 col-sm-12 col draggable-item" data-index={{$index}}>
+                        <div class="item-content">
+                            <widget model="widget" state="currentState"></widget>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="editing" ng-if="currentState===pageStates.EDITING">
+                <div class="grid row" id="temporary-grid">
+                    <div ng-repeat="widget in temporaryDashboard.widgets" ng-class="widgetSize[widget.size]" class="wrapper col-xs-12 col-sm-12 col draggable-item" data-index={{$index}} data-name={{widget.name}}>
+                        <div class="item-content">
+                            <widget model="widget" state="currentState" index="$index" delete-widget="deleteWidget(index)"></widget>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="editing-state-widget centered aligner col-xs-12 col-sm-12 col">
+                    <span class="centerPlus" ng-click="openWidgetDialog($event)">+</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

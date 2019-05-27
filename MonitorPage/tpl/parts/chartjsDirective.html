@@ -1,0 +1,15 @@
+<div>
+    <div ng-if="widget.options.data" >
+        <canvas height="110"
+                class="chart chart-base"
+                chart-type="widget.options.type"
+                chart-data="widget.options.data"
+                chart-labels="widget.options.labels"
+                chart-colors="widget.options.options.colours"
+                chart-series="series"
+                chart-hover="hover"
+                chart-click="click"
+                chart-options="widget.options.options">
+        </canvas>
+    </div>
+</div>

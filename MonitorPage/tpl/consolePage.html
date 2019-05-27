@@ -1,0 +1,222 @@
+<div class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="m-n font-thin h3 text-black">Console</h1>
+            <small class="text-muted">{{currentLogsConsole}} Console</small>
+            <small class="text-muted"
+                   ng-show="currentLogsConsole === 'Adapters' && monitoredAdapters.length !== adapterList.length">
+                (<span ng-repeat="adapter in chunkMonitoredFileList(monitoredAdapters)">{{adapter}} </span>)
+            </small>
+            <small class="text-muted"
+                   ng-show="currentLogsConsole === 'Adapters' && monitoredAdapters.length === adapterList.length">
+                (monitoring all {{adapterList.length}} adapters)
+            </small>
+            <small class="text-muted"
+                   ng-show="currentLogsConsole === 'Swarms' && monitoredSwarms.length !== swarmList.length">
+                (<span ng-repeat="swarm in chunkMonitoredFileList(monitoredSwarms)">{{swarm}} </span>)
+            </small>
+            <small class="text-muted"
+                   ng-show="currentLogsConsole === 'Swarms' && monitoredSwarms.length === swarmList.length">
+                (monitoring all {{swarmList.length}} swarms)
+            </small>
+
+            <div id="console-change-control">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="!editSettings">
+                    <div class="dropdown">
+                        <button class="btn btn-primary ng-click-active dropdown-toggle" data-toggle="dropdown">
+                            Available Consoles
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-class="{active: currentLogsConsole === 'Adapters'}"
+                                ng-click="selectCurrentLogsConsole('Adapters')"
+                                class="dropdown-submenu">
+                                <a>
+                                    Adapters
+                                    <span class="caret"></span>
+                                    <ul class="dropdown-menu scrollable-menu">
+                                        <li>
+                                            <a ng-click="monitorAllFiles(adapterList, monitoredAdapters, monitorAllAdapters, $event)">
+                                                <span class="glyphicon glyphicon-ok"
+                                                      ng-show="monitorAllAdapters"></span>
+                                                Select All
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li ng-repeat="adapter in adapterList">
+                                            <a ng-click="changeFileMonitorStatus(monitoredAdapters, adapter)">
+                                                <span class="glyphicon glyphicon-search"
+                                                      ng-show="isMonitoredFile(adapter, monitoredAdapters)"></span>
+                                                {{adapter}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                            </li>
+                            <li ng-class="{active: currentLogsConsole === 'Swarms'}"
+                                ng-click="selectCurrentLogsConsole('Swarms')"
+                                class="dropdown-submenu">
+                                <a>
+                                    Swarms
+                                    <span class="caret"></span>
+                                    <ul class="dropdown-menu scrollable-menu">
+                                        <li>
+                                            <a ng-click="monitorAllFiles(swarmList, monitoredSwarms, monitorAllSwarms, $event)">
+                                                    <span class="glyphicon glyphicon-ok"
+                                                          ng-show="monitorAllSwarms"></span>
+                                                Select All
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li ng-repeat="swarm in swarmList">
+                                            <a ng-click="changeFileMonitorStatus(monitoredSwarms, swarm)">
+                                                <span class="glyphicon glyphicon-search"
+                                                      ng-show="isMonitoredFile(swarm, monitoredSwarms)"></span>
+                                                {{swarm}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 logs-control-area large-screen-logs-control-area"
+                     ng-show="!editSettings">
+                    <button class="btn btn-primary ng-click-active logs-control-button"
+                            ng-click="refreshConsole()">
+                        <i class="fa fa-refresh"></i>
+                        Refresh
+                    </button>
+                    <button class="btn btn-primary ng-click-active logs-control-button"
+                            ng-click="clearConsole()">
+                        <i class="fa fa-times"></i>
+                        Clear
+                    </button>
+                    <button class="btn btn-primary ng-click-active logs-control-button"
+                            ng-click="editSettings = true">
+                        <i class="fa fa-gear"></i>
+                        Settings
+                    </button>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="editSettings">
+                    <button class="btn btn-primary ng-click-active logs-control-button pull-right"
+                            ng-click="discardSettings()">
+                        <i class="fa fa-undo"></i>
+                        Discard
+                    </button>
+                    <button class="btn btn-primary ng-click-active logs-control-button pull-right"
+                            ng-click="saveSettingsMenu()">
+                        <i class="fa fa-save"></i>
+                        Save
+                    </button>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 dropdown logs-control-area small-screen-logs-control-area"
+                     ng-show="!editSettings">
+                    <button class="btn btn-primary ng-click-active dropdown-toggle" data-toggle="dropdown">
+                        Console
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a ng-click="refreshConsole()">
+                                <i class="fa fa-refresh"></i>
+                                Refresh
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="clearConsole()">
+                                <i class="fa fa-times"></i>
+                                Clear
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="editSettings = true">
+                                <i class="fa fa-gear"></i>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="live-console-section"
+         class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+         ng-show="!editSettings">
+    <textarea id="console" rows="30" class="no-scroll" readonly auto-scroll-down>
+        {{availableLogsText}}
+    </textarea>
+    <div class="scroll-arrow-container">
+        <i class="fa fa-arrow-down"
+           ng-show="existsScrollableContent"
+           ng-click="scrollToBottom()"
+           title="Scroll To Bottom"></i>
+    </div>
+</section>
+
+<section ng-show="editSettings">
+    <div class="alert alert-danger col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" ng-show="displayErrorMessage">
+        <strong>{{errorMessage}}</strong>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">Displayed logs information</div>
+            <div class="panel-body">
+                <md-select ng-model="renderedLogsProperties"
+                           multiple="true"
+                           placeholder="Displayed logs information">
+                    <md-option ng-repeat="prop in availableLogsProperties">{{prop}}</md-option>
+                </md-select>
+                <md-checkbox ng-model="renderAllLogInfo"
+                             ng-change="renderAllLogProperties(renderAllLogInfo)"
+                             class="pull-right">
+                    Select All
+                </md-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">Logs Display Modality</div>
+            <div class="panel-body">
+                <md-select ng-model="logsDisplayModality" placeholder="{{logsDisplayModality}}">
+                    <md-option ng-repeat="displayModality in availableDisplayModalities">{{displayModality}}</md-option>
+                </md-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">Displayed logs information order</div>
+            <div class="panel-body">
+                <div class="panel b-a" ng-show="logsPropertiesOrder.length !== logsPropertiesToOrder.length">
+                    <div class="panel-heading font-bold">Available Log Information</div>
+                    <div class="list-group">
+                        <a class="list-group-item"
+                           ng-repeat="prop in logsPropertiesToOrder"
+                           ng-show="logsPropertiesOrder.indexOf(prop) === -1"
+                           ng-click="insertIntoLogsPropertiesOrder(prop)">
+                            {{prop}}
+                        </a>
+                    </div>
+                </div>
+                <div class="panel b-a">
+                    <div class="panel-heading font-bold">
+                        Chosen Information Order
+                        <i class="fa fa-reply pull-right" ng-click="startAnotherLogsPropertiesOrder()"></i>
+                    </div>
+                    <md-chips ng-model="logsPropertiesOrder" readonly="true" md-removable="true"></md-chips>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- TODO place scroll-down-arrow nice on mobile devices -->

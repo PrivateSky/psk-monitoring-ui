@@ -1,0 +1,149 @@
+.md-button.md-primary.md-raised,
+.md-button.md-primary.md-raised:not([disabled]):hover {
+    background-color: #7266ba;
+    color: white;
+}
+
+.md-button.md-fab {
+    line-height: 5.6rem;
+    min-width: 0;
+    width: 5.6rem;
+    top: 10px;
+    left: 20px;
+    position: relative;
+    height: 5.6rem;
+    border-radius: 50%;
+}
+
+.md-button .md-raised {
+    float: right;
+}
+
+.editing-state-widget {
+    margin-top: 5px;
+    border-radius: 2px;
+    height: 300px;
+    background: rgb(192, 192, 192);
+
+}
+
+.centerPlus {
+    font-size: 100px;
+    outline: none;
+}
+
+.aligner {
+    min-height: 300px;
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.wrapper-md {
+    padding: 13px;
+}
+
+body {
+    height: auto;
+    background-color: #f0f3f4;
+}
+
+#chart-dialog-toolbar {
+    background-color: #58666e;
+}
+
+md-radio-button .md-on {
+    background-color: #7266ba;
+}
+
+md-radio-button.md-checked .md-off {
+    border-color: #7266ba;
+}
+
+.md-dialog-actions .md-button {
+    background-color: #7266ba;
+    color: white;
+}
+
+.control-label {
+    padding-top: 7px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.disk-accordion .collapse {
+    display: none;
+    position: relative !important;
+    top: 0px !important;
+}
+
+.disk-accordion .in {
+    display: block !important;
+}
+
+.disk-accordion .panel-heading {
+    background-color: #474c5e;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.disk-accordion .panel-title {
+    color: #b1b1b1;
+
+}
+
+.disk-accordion .panel-body {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.disk-accordion .panel-title:hover, .disk-accordion .panel-heading :hover, .disk-accordion .panel-title:focus, .disk-accordion .panel-heading :focus {
+    color: white;
+}
+
+.disk-accordion i {
+    z-index: 0;
+}
+
+.md-dialog-container {
+    position: fixed;
+}
+
+#radio-button > .md-label {
+    width: 95%;
+}
+
+
+.grid {
+    position: relative;
+}
+.draggable-item {
+    display: block;
+    position: absolute;
+    z-index: 1;
+}
+.draggable-item.muuri-item-dragging {
+    z-index: 3;
+}
+.draggable-item.muuri-item-releasing {
+    z-index: 2;
+}
+.draggable-item.muuri-item-hidden {
+    z-index: 0;
+}
+.draggable-item-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}

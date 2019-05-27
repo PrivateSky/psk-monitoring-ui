@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./../angulr-theme/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/css/angular-material.min.css">
+    <link rel="stylesheet" href="../angulr-theme/css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="../angulr-theme/css/bootstrap.css">
+    <link rel="stylesheet" href="../angulr-theme/css/app.css">
+    <link rel="stylesheet" href="css/dashboard-page-style.css">
+    <link rel="stylesheet" href="css/logs-page-style.css">
+    <link rel="stylesheet" href="vendor/angular-material-expansion-panel/dist/md-expansion-panel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.css">
+    <link rel="stylesheet" href="css/logs-console-style.css">
+
+
+    <!--Swarms stuff-->
+<!--    <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>-->
+<!--    <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>-->
+<!--    <script src="../../../js/CommunicationService.js"></script>-->
+<!--    <script src="../../../js/SwarmHubClient.js"></script>-->
+    <script src="../devel/pskclient.js"></script>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery-ui.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/muuri/0.5.3/muuri.min.js"></script>
+
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/chart-libraries/Chart.js" type="text/javascript"></script>
+
+    <script src="vendor/chart-libraries/angular-chart.js"></script>
+    <script src="../angulr-theme/vendor/angular/angular-animate/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.9/angular-nvd3.js"></script>
+
+    <script src="vendor/angular/angular-route.js"></script>
+    <script src="vendor/angular/angular-resource.js"></script>
+    <script src="vendor/angular/angular-animate.min.js"></script>
+    <script src="vendor/angular/angular-aria.min.js"></script>
+    <script src="vendor/angular/angular-messages.min.js"></script>
+    <script src="vendor/angular/angular-ui-router.min.js"></script>
+    <script src="vendor/jquery/sortable.min.js"></script>
+    <script src="vendor/angular/angular-material.js"></script>
+    <script src='vendor/jquery/ng-infinite-scroll.min.js'></script>
+    <script src="vendor/angular-material-expansion-panel/dist/md-expansion-panel.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js"></script>
+    <script src='vendor/jquery/ng-infinite-scroll.min.js'></script>
+    <script src="../angulr-theme/vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<!--    <script src="vendor/fonts"></script>-->
+
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="../angulr-theme/vendor/angular/oclazyload/ocLazyLoad.js"></script>
+    <script src="js/config.lazyload.js"></script>
+    <script src="../angulr-theme/app/services/ui-load.js"></script>
+    <script src="js/services/logsService.js"></script>
+    <script src="js/controllers/monitorControl.js"></script>
+    <script src="js/controllers/dashboardControl.js"></script>
+<!--    <script src="js/controllers/notificationControl.js"></script>-->
+    <script src="js/controllers/logsControl.js"></script>
+    <script src="js/controllers/logsConsoleControl.js"></script>
+    <script src="js/directives/customizingControls.js"></script>
+    <script src="js/directives/widgetDirective.js"></script>
+    <script src="js/directives/miniWidgetDirective.js"></script>
+    <script src="js/directives/realTimeInfoSwitch.js"></script>
+    <script src="js/directives/chartTypesMenu.js"></script>
+    <script src="js/directives/addingNewDirective.js"></script>
+    <script src="js/directives/miniWidgetsTemplate/progressBar.js"></script>
+    <script src="js/directives/widgetTemplate/statsAdapterTemplate.js"></script>
+    <script src="js/directives/widgetTemplate/listGroupItems.js"></script>
+    <script src="js/directives/widgetTemplate/hardwareInfoTemplate.js"></script>
+    <script src="js/directives/widgetTemplate/allNumbersTemplate.js"></script>
+    <script src="js/directives/widgetTemplateSettings/updateInterval.js"></script>
+    <script src="js/directives/widgetTemplateSettings/lastSecondsDisplayed.js"></script>
+    <script src="js/directives/widgetTemplateSettings/activeAdapters.js"></script>
+    <script src="js/directives/autoScrollDownDirective.js"></script>
+    <script src="../angulr-theme/app/directives/ui-jq.js"></script>
+    <script src="js/directives/libraries/chartDirective.js"></script>
+    <script src="../angulr-theme/app/services/swarm-hub-service.js"></script>
+    <script src="js/services/dashboardService.js"></script>
+    <script src="js/services/widgetRealTimeInfo.js"></script>
+    <script src="js/services/dataProcessingHandlers.js"></script>
+    <script src="js/services/swarmEsbEntitiesService.js"></script>
+    <script src="../angulr-theme/app/services/swarm-hub-service.js"></script>
+    <script src="js/constant.js"></script>
+    <script src="js/directives/libraries/nvdDirective.js"></script>
+    <script src="../angulr-theme/app/directives/ui-nav.js"></script>
+
+    <script src="../angulr-theme/vendor/bootstrap/bootstrapNotify/bootstrap-notify.min.js"></script>
+<!--    <script src="../../../../swarm-esb/admin/adapters/dashboardAdapter.js"></script>-->
+
+</head>
+
+<body ng-app="app" id="monitoring">
+    <div ng-controller="monitorControl">
+        <div class="fade-in-up" ui-view></div>
+    </div>
+</body>
+
+</html>

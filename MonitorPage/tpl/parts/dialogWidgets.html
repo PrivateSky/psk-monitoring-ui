@@ -1,0 +1,32 @@
+<md-dialog aria-label="Charts">
+    <form ng-cloak>
+        <md-toolbar id="chart-dialog-toolbar">
+            <div class="md-toolbar-tools">
+                <h2>Charts</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()"> x
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-radio-group ng-model="radioValue">
+                    <md-radio-button ng-repeat="elem in list" ng-value="elem" aria-label="elem.name" id="radio-button">
+                        <widget model="elem" limit="limitWidgetsDisplayed"></widget>
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+            <md-button ng-click="answer(radioValue)">
+                Select
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

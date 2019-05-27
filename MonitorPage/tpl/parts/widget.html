@@ -1,0 +1,49 @@
+<div ng-if="state==pageStates.EDITING">
+    <customizing-controls></customizing-controls>
+</div>
+<div class="panel panel-default">
+    <div class="font-bold text-muted panel-heading">
+        <div ng-if="state==pageStates.PREVIEW && widget.options.liveInfo">
+            <span class="bg-success badge pull-right">Live</span>
+        </div>
+        {{widget.name}}
+    </div>
+
+    <div class="panel-body" ng-if="isCollapsed">
+        <div class="form-horizontal">
+            <div ng-if="checkSettings">
+                <div ng-repeat="setting in widget.templateSettings">
+                    <div adding-new-directive=setting></div>
+                    <div class='line line-dashed b-b line-lg pull-in'></div>
+                </div>
+
+                <chart-types-menu model="widget"></chart-types-menu>
+                <real-time-info-switch model="widget"></real-time-info-switch>
+            </div>
+            <div ng-if="!checkSettings">
+                <i class="fa fa-wrench"></i>
+                No settings!
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body" ng-if="widget.directive && !invalidData && !fetchingData">
+        <div ng-switch="widget.directive">
+            <div ng-switch-when="chart-directive" chart-directive item="widget"></div>
+            <div ng-switch-when="nvd-directive" nvd-directive item="widget"></div>
+        </div>
+    </div>
+    
+    <div ng-if="!invalidData && !fetchingData">
+        <div adding-new-directive="widget.template"></div>
+    </div>
+
+    <div class="panel-body" ng-if="invalidData && !fetchingData">
+        <i class="glyphicon glyphicon-warning-sign"></i>
+        No data!
+    </div>
+    <div class="panel-body" ng-if="fetchingData">
+        <i class="glyphicon  glyphicon-search"></i>
+        Fetching...
+    </div>
+</div>

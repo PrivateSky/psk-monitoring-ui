@@ -1,0 +1,61 @@
+html, body {
+    width: 100%;
+}
+
+#live-console-section {
+    background-color: black;
+    height: 100%;
+}
+
+#console-change-control {
+    margin-top: 10px;
+}
+
+#console {
+    background-color: black;
+    width: 98%;
+    margin-top: 10px;
+    margin-left: 20px;
+    color: white;
+    resize: none;
+    border: none;
+    font-family: Consolas, monaco, monospace;
+    transition: 0s;
+    hidden: 100%;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
+.no-scroll::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.scroll-arrow-container {
+    position: absolute;
+    bottom: 2%;
+    left: 97%;
+    width: 5%;
+}
+
+.scroll-arrow-container > i {
+    color: white;
+    font-size: 25px;
+}
+
+@media (max-height: 767px) {
+    .scroll-arrow-container {
+        position: absolute;
+        top: 2%;
+        left: 95%;
+    }
+
+    .scroll-arrow-container > i {
+        color: white;
+        font-size: inherit;
+    }
+}

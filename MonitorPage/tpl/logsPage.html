@@ -1,0 +1,305 @@
+<div ng-show="fetchingPage && !editingMobileSettings">
+    <div class="wrapper-md ng-scope">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fetching...
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!fetchingPage && !editingMobileSettings" class="bg-light lter b-b wrapper-md">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            <h1 class="m-n font-thin h3 text-black">Logs</h1>
+            <small class="text-muted">Welcome to SwarmESB Monitor Logs Page</small>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!fetchingPage && !editingMobileSettings" class="bg-light lter b-b wrapper-md zero-top-bottom-padding">
+    <div class="nav-functional-area">
+        <div class="nav-search-area input-group">
+            <div class="input-group search-input">
+                <input class="form-control"
+                       ng-model="patternToMatch"
+                       placeholder="Search for..."
+                       ng-keyup="searchLogs($event, patternToMatch)">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary ng-click-active" ng-click="searchLogs($event, patternToMatch)">
+                        Search
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="logs-control-area large-screen-logs-control-area">
+            <button id="mobile-settings-button"
+                    class="btn btn-primary ng-click-active logs-control-button"
+                    ng-click="editingMobileSettings = true">
+                Mobile Settings
+            </button>
+            <button ng-click="refreshLogs()"
+                    class="btn btn-primary ng-click-active logs-control-button">
+                Refresh Logs
+            </button>
+            <button ng-click="toggleFilterSidenav()"
+                    class="btn btn-primary ng-click-active logs-control-button">
+                Filter
+            </button>
+        </div>
+        <div class="dropdown logs-control-area small-screen-logs-control-area">
+            <button class="btn btn-primary ng-click-active dropdown-toggle" data-toggle="dropdown">
+                Table Control
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li ng-click="editingMobileSettings = true">
+                    <a>
+                        <md-icon md-svg-icon="images/settings.svg"></md-icon>
+                        Mobile Settings
+                    </a>
+                </li>
+                <li ng-click="refreshLogs()">
+                    <a>
+                        <md-icon md-svg-icon="images/refresh.svg"></md-icon>
+                        Refresh Logs
+                    </a>
+                </li>
+                <li ng-click="toggleFilterSidenav()">
+                    <a>
+                        <md-icon md-svg-icon="images/filter.svg"></md-icon>
+                        Filter
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<md-sidenav class="md-sidenav-right" md-component-id="filter-section-sidenav" id="filter-sidenav">
+    <md-toolbar id="filter-section-toolbar" class="md-toolbar-tools _md-toolbar-transitions">
+        Logs Filter
+    </md-toolbar>
+
+    <md-content>
+        <div>
+            <h3>Log Types</h3>
+            <md-select placeholder="Log Types Filter" ng-model="wantedLogTypes" multiple="true">
+                <md-option ng-repeat="logType in logTypes track by $index">{{logType}}</md-option>
+            </md-select>
+            <md-checkbox ng-model="allLogTypesChecked"
+                         ng-change="markAllLogTypes(allLogTypesChecked, wantedLogTypes)">
+                Select All
+            </md-checkbox>
+            <md-chips ng-model="wantedLogTypes" readonly="true" md-removable="true"></md-chips>
+        </div>
+
+        <div>
+            <h3>Table Columns</h3>
+            <md-select placeholder="Table Columns Filter" ng-model="renderedTableColumns" multiple="true">
+                <md-option ng-repeat="column in tableColumns track by $index">{{column}}</md-option>
+            </md-select>
+            <md-checkbox ng-model="allTableColumnsRendered"
+                         ng-change="renderColumns(allTableColumnsRendered, renderedTableColumns)">
+                Select All
+            </md-checkbox>
+            <md-chips ng-model="renderedTableColumns" readonly="true" md-removable="true"></md-chips>
+        </div>
+
+        <div>
+            <h3>Swarm Logs Monitor</h3>
+            <md-select placeholder="Choose a swarm to monitor it" ng-model="monitoredSwarm">
+                <md-option ng-repeat="swarm in swarmList track by $index"
+                           ng-value="swarm">
+                    {{swarm}}
+                </md-option>
+            </md-select>
+            <md-button ng-click="monitoredSwarm = ''">Reset Swarm Monitor</md-button>
+        </div>
+
+        <div>
+            <h3>Date Display Options</h3>
+            <md-input-container>
+                <span>Formatted Date</span>
+                <md-checkbox ng-model="formattedDate"></md-checkbox>
+            </md-input-container>
+            <md-divider></md-divider>
+        </div>
+
+        <div>
+            <h3>Timestamp</h3>
+            <md-input-container>
+                <label>Timestamp Lower Value</label>
+                <input type="datetime-local" ng-model="timestampStartValue"/>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Timestamp Upper Value</label>
+                <input type="datetime-local" ng-model="timestampEndValue"/>
+            </md-input-container>
+
+            <md-input-container>
+                <md-button ng-click="resetTimestampFilter()">
+                    Reset Timestamp Filter
+                </md-button>
+            </md-input-container>
+            <md-divider></md-divider>
+        </div>
+
+        <div>
+            <h3>Number of Logs on a Page</h3>
+            <md-input-container>
+                <input type="number" ng-model="PAGE_SIZE" min="1" max="100" pattern="\d+"/>
+            </md-input-container>
+        </div>
+
+        <div>
+            <md-input-container>
+                <md-button ng-click="closeFilterSidenav()">Close</md-button>
+            </md-input-container>
+            <md-divider></md-divider>
+        </div>
+        
+    </md-content>
+</md-sidenav>
+
+<div ng-show="!fetchingPage && !editingMobileSettings" class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th ng-repeat="column in tableColumns track by $index"
+                ng-show="renderedTableColumns.indexOf(column) != -1">
+                {{column}}
+                <md-icon class="material-icons"
+                         md-svg-icon="images/sorting-arrows.svg"
+                         ng-click="logsFilter.availableFilters.orderBy = column"
+                         ng-show="logsFilter.availableFilters.orderBy != column">
+                </md-icon>
+                <md-icon class="material-icon"
+                         ng-show="logsFilter.availableFilters.orderBy == column && logsFilter.availableFilters.orderType == DESCENDING_ORDER"
+                         md-svg-icon="images/up-arrow.svg"
+                         ng-click="sortLogsBy(column, ASCENDING_ORDER)">
+                </md-icon>
+                <md-icon class="material-icon"
+                         ng-show="logsFilter.availableFilters.orderBy == column && logsFilter.availableFilters.orderType == ASCENDING_ORDER"
+                         md-svg-icon="images/down-arrow.svg"
+                         ng-click="sortLogsBy(column, DESCENDING_ORDER)"></md-icon>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody ng-show="!fetchingLogs && logs.length > 0 && !editingMobileSettings">
+        <tr ng-repeat="log in logs track by $index">
+            <td ng-repeat="(propertyName, propertyValue) in log track by $index"
+                ng-show="shouldRenderColumn(propertyName)">
+                <p ng-show="propertyValue.toString().length <= MAX_INFO_SIZE">
+                    {{getPropertyValue(log, propertyName)}}
+                </p>
+                <md-expansion-panel ng-show="propertyValue.toString().length > MAX_INFO_SIZE"
+                                    ng-init="infoPanelId = 'info-panel-' + $parent.$parent.$index + '-' + $index"
+                                    md-component-id="{{infoPanelId}}">
+                    <md-expansion-panel-collapsed ng-click="overrideDefaultExpandBehaviour($event, infoPanelId)">
+                        <span class="big-length-info">{{propertyValue}}</span>
+                        <i class="fa fa-chevron-down" ng-click="expandInfoPanel(infoPanelId)"></i>
+                    </md-expansion-panel-collapsed>
+                    <md-expansion-panel-expanded class="expanded-big-text">
+                        <span>{{propertyValue}}</span>
+                        <i class="fa fa-chevron-up" ng-click="collapseInfoPanel(infoPanelId)"></i>
+                    </md-expansion-panel-expanded>
+                </md-expansion-panel>
+            </td>
+        </tr>
+        </tbody>
+
+        <tfoot ng-show="!fetchingLogs && logs.length > 0 && !editingMobileSettings">
+        <td colspan="6">
+            <div class="container text-center">
+                <ul class="pagination">
+                    <li ng-class="{disabled: currentPagesSet == 1}"
+                        ng-click="goToFirstPagesSet()">
+                        <a><<</a>
+                    </li>
+                    <li ng-class="{disabled: logsFilter.logsPage == 1}"
+                        ng-click="previousPage()">
+                        <a><</a>
+                    </li>
+                    <li ng-class="{disabled: currentPagesSet == 1}"
+                        ng-click="goToPreviousPagesSet()">
+                        <a>...</a>
+                    </li>
+                    <li ng-repeat="page in pagesRange()"
+                        ng-model="logsFilter.logsPage"
+                        ng-class="{active: page === logsFilter.logsPage}"
+                        ng-click="choosePage(page)">
+                        <a>{{page}}</a>
+                    </li>
+                    <li ng-class="{disabled: currentPagesSet == maxPagesSet}"
+                        ng-click="goToNextPagesSet()">
+                        <a>...</a>
+                    </li>
+                    <li ng-class="{disabled: logsFilter.logsPage == logsPagesCount}"
+                        ng-click="nextPage()">
+                        <a>></a>
+                    </li>
+                    <li ng-class="{disabled: currentPagesSet == maxPagesSet}"
+                        ng-click="goToLastPagesSet()">
+                        <a>>></a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+        </tfoot>
+    </table>
+
+    <div ng-show="fetchingLogs && !editingMobileSettings">
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Fetching logs...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section ng-show="editingMobileSettings">
+    <h3 class="text-center">Default Settings for Mobile Devices</h3>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h4>Default log types filter</h4>
+        <md-select placeholder="Log Types" ng-model="mobileWantedLogTypes" multiple="true">
+            <md-option ng-repeat="logType in logTypes">{{logType}}</md-option>
+        </md-select>
+        <md-checkbox ng-model="allLogTypesCheckedOnMobile"
+                     ng-change="markAllLogTypes(allLogTypesCheckedOnMobile, mobileWantedLogTypes)">
+            Select All
+        </md-checkbox>
+        <md-chips ng-model="mobileWantedLogTypes" readonly="true" md-removable="true"></md-chips>
+        <br>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h4>Default rendered columns filter</h4>
+        <md-select placeholder="Table Columns" ng-model="mobileRenderedTableColumns" multiple="true">
+            <md-option ng-repeat="column in tableColumns">{{column}}</md-option>
+        </md-select>
+        <md-checkbox ng-model="allTableColumnsRenderedOnMobile"
+                     ng-change="renderColumns(allTableColumnsRenderedOnMobile, mobileRenderedTableColumns)">
+            Select All
+        </md-checkbox>
+        <md-chips ng-model="mobileRenderedTableColumns" readonly="true" md-removable="true"></md-chips>
+        <br/>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 settings-submit-section">
+        <md-button ng-click="saveMobileSettings()">
+            <md-icon md-svg-icon="images/save.svg"></md-icon>
+            Save
+        </md-button>
+        <md-button ng-click="discardCurrentMobileSettings()">
+            <md-icon md-svg-icon="images/discard.svg"></md-icon>
+            Discard Changes
+        </md-button>
+    </div>
+    <div class="alert alert-danger col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" ng-show="mobileSettingsError">
+        <strong>Both settings areas should contain at least one option</strong>
+    </div>
+</section>
