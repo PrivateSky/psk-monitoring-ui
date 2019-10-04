@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stencil Starter App</title>
+  <meta name="Description"
+        content="Welcome to the Stencil App Starter. You can use this starter to build entire apps all with web components using Stencil!">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#16161d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="x-ua-compatible" content="IE=Edge">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .full-height {
+      height: 100%;
+      background: yellow;
+    }
+
+    .flexy {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full-space-flex {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 2;
+    }
+  </style>
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script type="module" src="/build/app.esm.js"></script>
+  <script nomodule src="/build/app.js"></script>
+  <link href="/build/app.css" rel="stylesheet">
+
+  <link rel="apple-touch-icon" href="/assets/icon/icon.png">
+  <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico">
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+
+<script>
+    window.addEventListener('needMenuItems', (e) => {
+        console.log('hello??', e.detail);
+        e.detail([
+            {
+                name: "Home",
+                path: "/",
+                icon: "fa-home",
+                type: "route"
+            },
+            {
+            name: "Logs",
+            path: "/charts/logs",
+            icon: "fa-history",
+            type: "route"
+            },
+            {
+                name: "Resources",
+                path: "/charts/resources",
+                icon: "fa-cubes",
+                type: "route"
+            },
+            {
+                name: "Swarms",
+                path: "/charts/swarms",
+                icon: "fa-sitemap",
+                type: "route"
+            }
+        ])
+    });
+</script>
+
+<div class="full-height flexy">
+  <div class="menu-bar">
+    <app-menu></app-menu>
+  </div>
+
+  <stencil-router class="full-space-flex" class="full-space-flex">
+    <stencil-route-switch scrollTopOffset={0} class="full-space-flex">
+      <stencil-route url="/" component="landing-page" exact={true} class="full-space-flex"/>
+      <stencil-route url="/charts/:pageType" component="influx-charts"/>
+    </stencil-route-switch>
+  </stencil-router>
+</div>
+
+
+<style>
+  .menu-bar {
+    background: #292933;
+  }
+</style>
+
+</body>
+</html>

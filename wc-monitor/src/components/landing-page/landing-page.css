@@ -1,0 +1,50 @@
+:host {
+  /*height: 100vh;*/
+  /*width: 100vw;*/
+  background: url("../../assets/landing-page-background.png") no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 2;
+}
+
+.floating-thingy {
+  width: 40vw;
+  height: 35vh;
+  background: white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  place-content: center space-around;
+  padding: 30px 60px;
+}
+
+.floating-thingy--title {
+  display: block;
+  font-family: Roboto, serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 37px;
+  color: rgb(41, 41, 51);
+}
+
+.floating-thingy--body {
+  font-family: Roboto, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 21px;
+  color: rgb(121, 121, 121);
+}
+
+.floating-thingy--button {
+  height: 48px;
+  width: 237px;
+  border-radius: 24px;
+  background: rgb(34, 173, 246);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  border: none;
+}
