@@ -11,8 +11,16 @@ export class LandingPage {
     return (
       <Host>
         <div class="floating-thingy">
-          <title class="floating-thingy--title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy </title>
-          <div class="floating-thingy--body">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</div>
+          <title class="floating-thingy--title">PrivateSky Monitor Tool</title>
+          <div class="floating-thingy--body">
+            This Web App offers an overview of the nodes and swarms in a PrivateSky Network.
+            The main functionalities of the present pages are:
+            <ul>
+              <li>Logs - offers information about the logs, errors and warning that appeared inside PrivateSky Nodes</li>
+              <li>Resources - offers data about the state of the machine that are running the PrivateSky Nodes</li>
+              <li>Swarms - offers different metrics about the swarms run by the PrivateSky Nodes</li>
+            </ul>
+          </div>
           <button class="floating-thingy--button">
             <span>Logs</span>
           </button>
